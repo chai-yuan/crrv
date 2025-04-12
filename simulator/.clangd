@@ -1,0 +1,4 @@
+CompileFlags:
+  Add:
+    - -I/nix/store/7jwd3d9fw3zf7byj7pf6rlv5kw5rd1l0-verilator-5.028/share/verilator/include
+    - -I/nix/store/7jwd3d9fw3zf7byj7pf6rlv5kw5rd1l0-verilator-5.028/share/verilator/include/vltstd/

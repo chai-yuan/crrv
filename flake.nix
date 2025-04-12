@@ -32,6 +32,7 @@
               pkgs.gcc
               pkgs.gnumake
               pkgs.verilator
+              pkgs.clang-tools
               # chisel
               pkgs.dtc
               pkgs.jdk17
