@@ -1,11 +1,11 @@
 #include "NpcSimulator.hpp"
-#include "../obj_dir/VVerilatorSoC.h"
+#include "../obj_dir/VysyxSoCFPGA.h"
 #include "CommandLineParser.hpp"
 #include "SimulatorState.hpp"
 #include "verilated.h"
 #include "verilated_vcd_c.h"
 
-VVerilatorSoC     *simTop;
+VysyxSoCFPGA     *simTop;
 VerilatedContext *contextp;
 VerilatedVcdC    *tfp;
 
@@ -26,7 +26,7 @@ static void traceExit() {
 
 void npcSimulatorInit() {
     contextp = new VerilatedContext();
-    simTop   = new VVerilatorSoC();
+    simTop   = new VysyxSoCFPGA();
     if (globalConfig.trace_enable) {
         traceInit();
     }

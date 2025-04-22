@@ -1,13 +1,13 @@
 #include "SimulatorState.hpp"
 #include "cmath"
 
-extern "C" void dpi_read(uint32_t raddr, uint32_t *rdata) {
+extern "C" void dpi_sram_read(uint32_t raddr, uint32_t *rdata) {
     raddr  = raddr & 0xffffff;
     *rdata = *(uint32_t *)&simulator.mem[raddr];
     printf("read at %x : %x\n", raddr, *rdata);
 }
 
-extern "C" void dpi_write(uint32_t waddr, int wmask, uint32_t wdata) {
+extern "C" void dpi_sram_write(uint32_t waddr, int wmask, uint32_t wdata) {
     waddr = waddr & 0xffffff;
     printf("write : %x : %x , mask : %b\n", waddr, wdata, wmask);
     for (int i = 0; i < 4; i++) {

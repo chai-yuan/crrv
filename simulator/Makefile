@@ -1,16 +1,16 @@
-TOP_NAME ?= VerilatorSoC
+TOP_NAME ?= ysyxSoCFPGA
 
 VSRCS_DIR 	:= vsrc
 CSRCS_DIR 	:= src
 CINCS_DIR	:= src
 OBJ_DIR 	:= obj_dir
 VSRCS += $(shell find $(abspath $(VSRCS_DIR)) -name "*.v")
-VSRCS += $(shell find $(abspath $(VSRCS_DIR)) -name "*.vs")
+VSRCS += $(shell find $(abspath $(VSRCS_DIR)) -name "*.sv")
 VINCS += $(shell find $(abspath $(VINCS_DIR)) -name "*.vh")
 CSRCS += $(shell find $(abspath $(CSRCS_DIR)) -name "*.cpp") 
 CINCS += $(shell find $(abspath $(CINCS_DIR)) -name "*.hpp") 
 
-VERILATOR_FLAGS := -I$(VSRCS_DIR)/
+VERILATOR_FLAGS := -I$(VSRCS_DIR)/uart16550/rtl/
 VERILATOR_FLAGS += --top $(TOP_NAME) -Wno-lint -Wno-style -Wno-UNUSED
 VERILATOR_FLAGS += --trace --cc --exe --build --no-timing --timescale "1ns/1ns"
 BIN 		:= $(OBJ_DIR)/V$(TOP_NAME)
