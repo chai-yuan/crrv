@@ -6,6 +6,6 @@ import export._
 object EmitVerilogFile extends App {
   ChiselStage.emitSystemVerilogFile(
     new SoCExporter,
-    firtoolOpts = Array("-disable-all-randomization", "-strip-debug-info", "--split-verilog","-o=build")
+    firtoolOpts = Array("-disable-all-randomization", "-strip-debug-info")
   )
 }

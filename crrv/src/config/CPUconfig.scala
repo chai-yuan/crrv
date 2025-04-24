@@ -18,7 +18,7 @@ object CPUconfig {
   val RESET_PC   = "h8000_0000".U(ADDR_WIDTH.W)
 
   // 生成目标
-  val GEN_DEBUG = true
+  val GEN_DEBUG = false
 
   // 定义生成目标枚举
   object TargetGen extends ChiselEnum {

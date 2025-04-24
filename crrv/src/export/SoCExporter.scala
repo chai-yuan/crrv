@@ -6,6 +6,8 @@ import chisel3.util._
 import io._
 import core._
 import bus._
+import config.CPUconfig
+import sim.Debug
 
 class SoCExporter extends Module {
   val io = IO(new CPUWarpIO)
@@ -35,7 +37,14 @@ class SoCExporter extends Module {
   core.io.intr.timer := clint.io.intr
   core.io.intr.soft := false.B
   core.io.intr.extern := false.B
-  core.io.debug <> DontCare
+  if (CPUconfig.GEN_DEBUG) {
+    val debug = Module(new Debug)
+    debug.io.debug <> core.io.debug
+    debug.io.clock := clock
+    debug.io.reset := reset
+  } else {
+    core.io.debug <> DontCare
+  }
 
   aximaster.aw.ready := io.master.awready
   io.master.awvalid := aximaster.aw.valid
