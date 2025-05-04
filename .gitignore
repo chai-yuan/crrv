@@ -2,6 +2,10 @@
 .bloop/
 out/
 
+tools/crrv-tools/
+tools/__pycache__/
+
+*.gtkw
 *.bin
 *.sv
 *.v

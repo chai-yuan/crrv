@@ -4,7 +4,8 @@
 
 SimulatorState simulator = {
     .core = {.pc = 0, .regs = {0}},
-    .mem  = {0},
+    .bram = {0},
+    .sram = {0},
 
     .instCount   = 0,
     .cycleCount  = 0,
@@ -18,10 +19,28 @@ void dumpCore() {
 
     printf("Registers:\n");
     for (int i = 0; i < 32; i += 4) {
-        printf("  x%02x: 0x%08x  x%02x: 0x%08x  x%02x: 0x%08x  x%02x: 0x%08x\n", i,
-               simulator.core.regs[i], i + 1, simulator.core.regs[i + 1], i + 2,
-               simulator.core.regs[i + 2], i + 3, simulator.core.regs[i + 3]);
+        printf("  x%02x: 0x%08x  x%02x: 0x%08x  x%02x: 0x%08x  x%02x: 0x%08x\n", i, simulator.core.regs[i], i + 1,
+               simulator.core.regs[i + 1], i + 2, simulator.core.regs[i + 2], i + 3, simulator.core.regs[i + 3]);
     }
+}
+
+void initFlashFromFile(std::string fileName) {
+    std::ifstream file(fileName, std::ios::binary);
+    if (!file.is_open()) {
+        throw std::runtime_error("Failed to open file: " + fileName);
+    }
+
+    file.seekg(0, std::ios::end);
+    std::streampos fileSize = file.tellg();
+    file.seekg(0, std::ios::beg);
+
+    if (fileSize > sizeof(simulator.flash)) {
+        throw std::runtime_error("File size exceeds available flash");
+    }
+
+    file.read(reinterpret_cast<char *>(simulator.flash), fileSize);
+
+    file.close();
 }
 
 void initMemoryFromFile(std::string fileName) {
@@ -34,11 +53,11 @@ void initMemoryFromFile(std::string fileName) {
     std::streampos fileSize = file.tellg();
     file.seekg(0, std::ios::beg);
 
-    if (fileSize > sizeof(simulator.mem)) {
+    if (fileSize > sizeof(simulator.bram)) {
         throw std::runtime_error("File size exceeds available memory");
     }
 
-    file.read(reinterpret_cast<char *>(simulator.mem), fileSize);
+    file.read(reinterpret_cast<char *>(simulator.bram), fileSize);
 
     file.close();
 }

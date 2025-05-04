@@ -1,19 +1,33 @@
 #include "SimulatorState.hpp"
 #include "cmath"
 
-extern "C" void dpi_sram_read(uint32_t raddr, uint32_t *rdata) {
-    raddr  = raddr & 0xfffffc;
-    *rdata = *(uint32_t *)&simulator.mem[raddr];
-    //    printf("read at %x : %x\n", raddr, *rdata);
+extern "C" void dpi_read(uint32_t raddr, uint32_t *rdata) {
+    uint8_t *mem_base = 0x0;
+    if (raddr >= 0x80000000) {
+        mem_base = (uint8_t *)simulator.sram;
+    } else if (raddr >= 0x30000000) {
+        mem_base = (uint8_t *)simulator.flash;
+    } else if (raddr >= 0x20000000) {
+        mem_base = (uint8_t *)simulator.bram;
+    }
+
+    *rdata = *(uint32_t *)&mem_base[raddr & 0xfffffc];
 }
 
-extern "C" void dpi_sram_write(uint32_t waddr, int wmask, uint32_t wdata) {
+extern "C" void dpi_write(uint32_t waddr, int wmask, uint32_t wdata) {
+    uint8_t *mem_base = (uint8_t *)simulator.sram;
+    if (waddr >= 0x80000000) {
+        mem_base = (uint8_t *)simulator.sram;
+    } else if (waddr >= 0x30000000) {
+        mem_base = (uint8_t *)simulator.flash;
+    } else if (waddr >= 0x20000000) {
+        mem_base = (uint8_t *)simulator.bram;
+    }
+
     waddr = waddr & 0xfffffc;
-    //   printf("write : %x : %x , mask : %b\n", waddr, wdata, wmask);
     for (int i = 0; i < 4; i++) {
         if (wmask & 1)
-            simulator.mem[waddr] = wdata & 0xff;
-
+            mem_base[waddr] = wdata & 0xff;
         waddr += 1;
         wdata = wdata >> 8;
         wmask = wmask >> 1;

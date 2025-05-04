@@ -11,7 +11,10 @@ struct RiscvCoreState {
 
 struct SimulatorState {
     RiscvCoreState core;
-    uint8_t        mem[8 * 1024 * 1024];
+    uint8_t        flash[8 * 1024 * 1024];
+    uint8_t        bram[8 * 1024 * 1024];
+    uint8_t        sram[8 * 1024 * 1024];
+    uint8_t        psram[8 * 1024 * 1024];
 
     uint32_t instCount;
     uint32_t cycleCount;
@@ -23,6 +26,8 @@ struct SimulatorState {
 extern SimulatorState simulator;
 
 void initMemoryFromFile(std::string fileName);
+
+void initFlashFromFile(std::string fileName);
 
 void dumpCore();
 

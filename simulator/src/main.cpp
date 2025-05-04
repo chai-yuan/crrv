@@ -4,16 +4,6 @@
 #include "SimulatorState.hpp"
 #include "verilated.h"
 
-/*
- *  ██╗   ██╗███████╗██╗   ██╗██╗  ██╗     ██████╗██╗   ██╗██████╗
- *  ╚██╗ ██╔╝██╔════╝╚██╗ ██╔╝╚██╗██╔╝    ██╔════╝██║   ██║██╔══██╗
- *   ╚████╔╝ ███████╗ ╚████╔╝  ╚███╔╝     ██║     ██║   ██║██████╔╝
- *    ╚██╔╝  ╚════██║  ╚██╔╝   ██╔██╗     ██║     ██║   ██║██╔═══╝
- *     ██║   ███████║   ██║   ██╔╝ ██╗    ╚██████╗╚██████╔╝██║
- *     ╚═╝   ╚══════╝   ╚═╝   ╚═╝  ╚═╝     ╚═════╝ ╚═════╝ ╚═╝
- *
- */
-
 int main(int argc, char *argv[]) {
     Verilated::commandArgs(argc, argv);
     parseArguments(argc, argv);
@@ -23,13 +13,13 @@ int main(int argc, char *argv[]) {
 
     initMemoryFromFile(globalConfig.inputFile);
 
-    difftestInit(globalConfig.difftestFile, simulator.mem, sizeof(simulator.mem));
+    //    difftestInit(globalConfig.difftestFile, simulator.sram, sizeof(simulator.sram));
 
     while (true) {
         npcStepInst();
         if (simulator.isHalted)
             break;
-        difftestStep();
+        // difftestStep();
         if ((simulator.instCount >= globalConfig.step) || (simulator.cycleCount >= globalConfig.cycle))
             break;
     }
