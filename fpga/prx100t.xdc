@@ -74,6 +74,7 @@ set_property -dict { PACKAGE_PIN J24    IOSTANDARD LVCMOS33 } [get_ports { SRAM_
 set_property -dict { PACKAGE_PIN G25    IOSTANDARD LVCMOS33 } [get_ports { SRAM_addr[15] }];
 set_property -dict { PACKAGE_PIN G24    IOSTANDARD LVCMOS33 } [get_ports { SRAM_addr[16] }];
 set_property -dict { PACKAGE_PIN J21    IOSTANDARD LVCMOS33 } [get_ports { SRAM_addr[17] }];
+set_property -dict { PACKAGE_PIN J23    IOSTANDARD LVCMOS33 } [get_ports { SRAM_addr[18] }];
 
 set_property -dict { PACKAGE_PIN U21    IOSTANDARD LVCMOS33 } [get_ports { SRAM_data[0] }];
 set_property -dict { PACKAGE_PIN U25    IOSTANDARD LVCMOS33 } [get_ports { SRAM_data[1] }];
